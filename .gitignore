@@ -43,5 +43,6 @@ Temporary Items
 .apdisk
 bin/
 obj/
+*.suo
 *.user
 *.cachefile
