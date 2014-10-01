@@ -112,7 +112,7 @@
     <Compile Include="Source\HUD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Source\Game1.cs" />
+    <Compile Include="Source\Main.cs" />
     <Compile Include="Source\SpriteManager.cs" />
   </ItemGroup>
   <ItemGroup>
