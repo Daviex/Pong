@@ -17,7 +17,8 @@
     <XnaCrossPlatformGroupID>c6f6bfe3-9997-47ae-9c0d-377894791961</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
     <ApplicationIcon>Game.ico</ApplicationIcon>
-    <Thumbnail>ball.png</Thumbnail>
+    <Thumbnail>
+    </Thumbnail>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -116,9 +117,7 @@
     <Compile Include="SpriteManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ball.png" />
     <Content Include="Game.ico" />
-    <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PingPongContent\PingPongContent.contentproj">
