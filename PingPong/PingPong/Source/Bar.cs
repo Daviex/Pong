@@ -85,7 +85,7 @@ namespace Pong
             else
                 mDirection.Y = 1;
 
-            if (ballPosition.Y != Position.Y)
+            if (Math.Abs(ballPosition.Y - Position.Y) > 10)
                 Position.Y += mDirection.Y * mSpeed.Y * (float)gameTime.ElapsedGameTime.TotalSeconds;
             //END AI
 
