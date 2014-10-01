@@ -1,6 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+
+using Microsoft.Win32.SafeHandles;  
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -9,6 +14,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Diagnostics;
 
 namespace Pong
 {
@@ -17,6 +23,25 @@ namespace Pong
     /// </summary>
     public class Main : Microsoft.Xna.Framework.Game
     {
+        #region Console Infos
+
+        [DllImport("kernel32.dll",
+              EntryPoint = "GetStdHandle",
+              SetLastError = true,
+              CharSet = CharSet.Auto,
+              CallingConvention = CallingConvention.StdCall)]
+        private static extern IntPtr GetStdHandle(int nStdHandle);
+        [DllImport("kernel32.dll",
+            EntryPoint = "AllocConsole",
+            SetLastError = true,
+            CharSet = CharSet.Auto,
+            CallingConvention = CallingConvention.StdCall)]
+        private static extern int AllocConsole();
+        private const int STD_OUTPUT_HANDLE = -11;
+        private const int MY_CODE_PAGE = 437;  
+
+        #endregion
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -83,11 +108,31 @@ namespace Pong
             hudPlayer.Font = Content.Load<SpriteFont>("myFont");
             hudEnemy.Font = Content.Load<SpriteFont>("myFont");
 
-            Random rand = new Random(Environment.TickCount);
-
             player.loadContent(playerTexture, new Vector2(50, 340));
             enemy.loadContent(enemyTexture, new Vector2(1230, 340));
-            ball.loadContent(ballTexture, new Vector2(640, 360), fromDegrees((double)rand.Next(0, 360)));
+            
+            Random rand = new Random(Environment.TickCount);
+            double grade = 0.0;
+            bool Found = false;
+
+            do
+            {
+                grade = rand.Next(0, 360);
+                if ((grade >= 30 && grade <= 60) || (grade >= 120 && grade <= 150) || (grade >= 210 && grade <= 240) || (grade >= 300 && grade <= 330))
+                {
+#if DEBUG
+                    Debug.WriteLine("Degrees: " + grade);
+                    Debug.WriteLine("Radians: " + DegreesToRadians(grade));
+                    Debug.WriteLine("Sin: " + Math.Sin(DegreesToRadians(grade)));
+                    Debug.WriteLine("Sin: " + Math.Sin(DegreesToRadians(grade)));
+                    Debug.WriteLine("Cos: " + Math.Cos(DegreesToRadians(grade)));
+#endif
+                    Found = true;
+                }
+            }
+            while (!Found);
+            ball.loadContent(ballTexture, new Vector2(640, 360), fromDegrees(DegreesToRadians(grade)));
+
             centralLine.loadContent(centralLineTexture, new Vector2(640, 0));
         }
 
@@ -199,18 +244,42 @@ namespace Pong
         {
             ball.Position = new Vector2(640, 360);
             Random rand = new Random(Environment.TickCount);
-            ball.Velocity = fromDegrees((double)rand.Next(0, 360));
+            double grade = 0.0;
+            bool Found = false;
+
+            do
+            {
+                grade = rand.Next(0, 360);
+                if ((grade >= 30 && grade <= 60) || (grade >= 120 && grade <= 150) || (grade >= 210 && grade <= 240) || (grade >= 300 && grade <= 330))
+                {
+#if DEBUG
+                    Debug.WriteLine("Degrees: " + grade);
+                    Debug.WriteLine("Radians: " + DegreesToRadians(grade));
+                    Debug.WriteLine("Sin: " + Math.Sin(DegreesToRadians(grade)));
+                    Debug.WriteLine("Sin: " + Math.Sin(DegreesToRadians(grade)));
+                    Debug.WriteLine("Cos: " + Math.Cos(DegreesToRadians(grade)));
+#endif
+                    Found = true;
+                }
+            }
+            while (!Found);
+            ball.Velocity = fromDegrees(grade);
 
             player.Position = new Vector2(50, 340);
             enemy.Position = new Vector2(1230, 340);
+        }
+
+        public double DegreesToRadians(double degrees)
+        {
+            return degrees * Math.PI / 180.0;
         }
 
         private Vector2 fromDegrees(double value)
         {
             Vector2 newVector = new Vector2();
 
-            double x = Math.Cos(value);
-            double y = Math.Sin(value);
+            double x = Math.Sin(value);
+            double y = Math.Cos(value);
 
             newVector.X = (float)x * 5;
             newVector.Y = (float)y * 5;
