@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,13 +9,11 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace PingPong
+namespace Pong
 {
     public class enemyBar : SpriteManager
     {
         const int BAR_SPEED = 200;
-        const int MOVE_UP = -1;
-        const int MOVE_DOWN = 1;
 
         Vector2 mDirection = Vector2.Zero;
         Vector2 mSpeed = Vector2.Zero;
@@ -30,7 +28,7 @@ namespace PingPong
             UpdateMovement(aCurrentKeyboardState);
 
             previousKeyboardState = aCurrentKeyboardState;
-            */
+            
 
             //AI
             mSpeed.Y = BAR_SPEED;
@@ -66,3 +64,4 @@ namespace PingPong
         }
     }
 }
+*/

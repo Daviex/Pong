@@ -1,6 +1,6 @@
 using System;
 
-namespace PingPong
+namespace Pong
 {
 #if WINDOWS || XBOX
     static class Program
