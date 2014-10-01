@@ -162,6 +162,8 @@ namespace PingPong
             if (ball.BoundingBox.Intersects(player.BoundingBox) || ball.BoundingBox.Intersects(enemy.BoundingBox))
             {
                 ball.Velocity.X = -ball.Velocity.X;
+                ball.Velocity.X *= (float)1.2;
+                ball.Velocity.Y *= (float)1.2;
                 ball.Position += ball.Velocity;
             }
 
