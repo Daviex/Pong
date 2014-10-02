@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -66,7 +67,7 @@ namespace Pong
         public enemyBar()
         {
             BAR_SPEED = 300;
-            mSpeed.Y = BAR_SPEED;
+            mSpeed.Y = 300;
         }
 
         public void Update(GameTime gameTime, Vector2 ballPosition)
@@ -85,7 +86,17 @@ namespace Pong
             else
                 mDirection.Y = 1;
 
-            if (ballPosition.Y != ( Position.Y + 32 ))
+            if (Math.Abs(Position.Y - ballPosition.Y) <= 100)
+            {
+                mSpeed.Y = 80 + Math.Abs(ballPosition.Y - Position.Y) * (float)2;
+
+                if (mSpeed.Y > 300)
+                    mSpeed.Y = 300;
+            }
+            else
+                mSpeed.Y = 300;
+
+            if (Math.Abs(ballPosition.Y - Position.Y - 32) > 20 )
                 Position.Y += mDirection.Y * mSpeed.Y * (float)gameTime.ElapsedGameTime.TotalSeconds;
             //END AI
 

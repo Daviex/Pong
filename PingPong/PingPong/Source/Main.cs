@@ -23,25 +23,6 @@ namespace Pong
     /// </summary>
     public class Main : Microsoft.Xna.Framework.Game
     {
-        #region Console Infos
-
-        [DllImport("kernel32.dll",
-              EntryPoint = "GetStdHandle",
-              SetLastError = true,
-              CharSet = CharSet.Auto,
-              CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr GetStdHandle(int nStdHandle);
-        [DllImport("kernel32.dll",
-            EntryPoint = "AllocConsole",
-            SetLastError = true,
-            CharSet = CharSet.Auto,
-            CallingConvention = CallingConvention.StdCall)]
-        private static extern int AllocConsole();
-        private const int STD_OUTPUT_HANDLE = -11;
-        private const int MY_CODE_PAGE = 437;  
-
-        #endregion
-
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -206,10 +187,13 @@ namespace Pong
 
             if (ball.BoundingBox.Intersects(player.BoundingBox) || ball.BoundingBox.Intersects(enemy.BoundingBox))
             {
-                ball.Velocity.X = -ball.Velocity.X;
-                ball.Velocity.X *= (float)1.2;
-                ball.Velocity.Y *= (float)1.2;
-                ball.Position += ball.Velocity;
+                if (BallFrontHit())
+                {
+                    ball.Velocity.X = -ball.Velocity.X;
+                    ball.Velocity.X *= (float)1.2;
+                    ball.Velocity.Y *= (float)1.2;
+                    ball.Position += ball.Velocity;
+                }
             }
 
             #endregion
@@ -269,6 +253,16 @@ namespace Pong
             enemy.Position = new Vector2(1230, 340);
         }
 
+        public bool BallFrontHit()
+        {
+            if (ball.Position.X > player.Position.X + player.BoundingBox.Width)
+                return true;
+            else if (ball.Position.X < enemy.Position.X)
+                return true;
+            else
+                return false;
+        }
+
         public double DegreesToRadians(double degrees)
         {
             return degrees * Math.PI / 180.0;
@@ -280,9 +274,10 @@ namespace Pong
 
             double x = Math.Sin(value);
             double y = Math.Cos(value);
+            float mult = 5;
 
-            newVector.X = (float)x * 5;
-            newVector.Y = (float)y * 5;
+            newVector.X = (float)x * mult;
+            newVector.Y = (float)y * mult;
 
             return newVector;
         }
