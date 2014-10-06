@@ -247,7 +247,7 @@ namespace Pong
                 }
             }
             while (!Found);
-            ball.Velocity = fromDegrees(grade);
+            ball.Velocity = fromDegrees(DegreesToRadians(grade));
 
             player.Position = new Vector2(50, 340);
             enemy.Position = new Vector2(1230, 340);
@@ -255,9 +255,7 @@ namespace Pong
 
         public bool BallFrontHit()
         {
-            if (ball.Position.X > player.Position.X + player.BoundingBox.Width)
-                return true;
-            else if (ball.Position.X < enemy.Position.X)
+            if (ball.Position.X > player.Position.X && ball.Position.X < enemy.Position.X)
                 return true;
             else
                 return false;
@@ -274,7 +272,7 @@ namespace Pong
 
             double x = Math.Sin(value);
             double y = Math.Cos(value);
-            float mult = 5;
+            float mult = 2;
 
             newVector.X = (float)x * mult;
             newVector.Y = (float)y * mult;
