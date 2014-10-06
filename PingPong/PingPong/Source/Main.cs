@@ -272,7 +272,7 @@ namespace Pong
 
             double x = Math.Sin(value);
             double y = Math.Cos(value);
-            float mult = 2;
+            float mult = 4;
 
             newVector.X = (float)x * mult;
             newVector.Y = (float)y * mult;
