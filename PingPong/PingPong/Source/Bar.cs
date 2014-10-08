@@ -25,6 +25,7 @@ namespace Pong
     public class playerBar : Bar
     {
         KeyboardState previousKeyboardState;
+        public bool emergencyShieldActive = false;
 
         public playerBar()
         {
@@ -47,15 +48,19 @@ namespace Pong
             mSpeed = Vector2.Zero;
             mDirection = Vector2.Zero;
 
-            if (currentKeyboardState.IsKeyDown(Keys.W) == true)
+            if (currentKeyboardState.IsKeyDown(Keys.W))
             {
                 mSpeed.Y = BAR_SPEED;
                 mDirection.Y = MOVE_UP;
             }
-            else if (currentKeyboardState.IsKeyDown(Keys.S) == true)
+            else if (currentKeyboardState.IsKeyDown(Keys.S))
             {
                 mSpeed.Y = BAR_SPEED;
                 mDirection.Y = MOVE_DOWN;
+            }
+            else if (currentKeyboardState.IsKeyDown(Keys.D))
+            {
+                emergencyShieldActive = true;
             }
         }
     }
@@ -110,16 +115,34 @@ namespace Pong
             mSpeed = Vector2.Zero;
             mDirection = Vector2.Zero;
 
-            if (currentKeyboardState.IsKeyDown(Keys.Up) == true)
+            if (currentKeyboardState.IsKeyDown(Keys.Up))
             {
                 mSpeed.Y = BAR_SPEED;
                 mDirection.Y = MOVE_UP;
             }
-            else if (currentKeyboardState.IsKeyDown(Keys.Down) == true)
+            else if (currentKeyboardState.IsKeyDown(Keys.Down))
             {
                 mSpeed.Y = BAR_SPEED;
                 mDirection.Y = MOVE_DOWN;
             }
         }*/
+    }
+
+    public class emergencyShield : Bar
+    {
+        bool isActivated = false;
+
+        public emergencyShield(bool isActivated)
+        { 
+            this.isActivated = isActivated; 
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            if (isActivated)
+            {
+
+            }
+        }
     }
 }

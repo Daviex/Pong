@@ -36,6 +36,8 @@ namespace Pong
         enemyBar enemy;
         SpriteManager centralLine;
 
+        emergencyShield shield;
+
         HUD hudPlayer;
         HUD hudEnemy;
 
@@ -86,11 +88,14 @@ namespace Pong
             Texture2D enemyTexture = Content.Load<Texture2D>("img/Sprite/bar");
             Texture2D ballTexture = Content.Load<Texture2D>("img/Sprite/ball");
             Texture2D centralLineTexture = Content.Load<Texture2D>("img/Sprite/centralBar");
+            Texture2D emergencyShield = Content.Load<Texture2D>("img/Sprite/emergencyShield");
+
             hudPlayer.Font = Content.Load<SpriteFont>("myFont");
             hudEnemy.Font = Content.Load<SpriteFont>("myFont");
 
             player.loadContent(playerTexture, new Vector2(50, 340));
             enemy.loadContent(enemyTexture, new Vector2(1230, 340));
+
             
             Random rand = new Random(Environment.TickCount);
             double grade = 0.0;
@@ -198,6 +203,13 @@ namespace Pong
 
             #endregion
 
+            #region Emergency Shield Activation
+            if (player.emergencyShieldActive)
+            {
+                
+            }
+            #endregion
+
             base.Update(gameTime);
         }
 
@@ -216,6 +228,11 @@ namespace Pong
             ball.Draw(spriteBatch);
             hudPlayer.Draw(spriteBatch, scorePlayer);
             hudEnemy.Draw(spriteBatch, scoreEnemy);
+
+            if (player.emergencyShieldActive)
+            {
+                shield.Draw(spriteBatch);
+            }
 
             centralLine.Draw(spriteBatch);
 
